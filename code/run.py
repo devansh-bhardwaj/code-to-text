@@ -200,8 +200,8 @@ def main():
     
     parser.add_argument("--train_batch_size", default=8, type=int,
                         help="Batch size per GPU/CPU for training.")
-    parser.add_argument("--eval_batch_size", default=8, type=int,
-                        help="Batch size per GPU/CPU for evaluation.")
+#     parser.add_argument("--eval_batch_size", default=8, type=int,
+#                         help="Batch size per GPU/CPU for evaluation.")
     parser.add_argument('--gradient_accumulation_steps', type=int, default=1,
                         help="Number of updates steps to accumulate before performing a backward/update pass.")
     parser.add_argument("--learning_rate", default=5e-5, type=float,
@@ -361,11 +361,11 @@ def main():
                     eval_data = TensorDataset(all_source_ids,all_source_mask,all_target_ids,all_target_mask)   
                     dev_dataset['dev_loss']=eval_examples,eval_data
                 eval_sampler = SequentialSampler(eval_data)
-                eval_dataloader = DataLoader(eval_data, sampler=eval_sampler, batch_size=args.eval_batch_size)
+                eval_dataloader = DataLoader(eval_data, sampler=eval_sampler, batch_size=32)
 
                 logger.info("\n***** Running evaluation *****")
                 logger.info("  Num examples = %d", len(eval_examples))
-                logger.info("  Batch size = %d", args.eval_batch_size)
+                logger.info("  Batch size = %d", 32)
 
                 #Start Evaling model
                 model.eval()
@@ -424,7 +424,7 @@ def main():
 
 
                 eval_sampler = SequentialSampler(eval_data)
-                eval_dataloader = DataLoader(eval_data, sampler=eval_sampler, batch_size=args.eval_batch_size)
+                eval_dataloader = DataLoader(eval_data, sampler=eval_sampler, batch_size=32)
 
                 model.eval() 
                 p=[]
@@ -480,7 +480,7 @@ def main():
 
             # Calculate bleu
             eval_sampler = SequentialSampler(eval_data)
-            eval_dataloader = DataLoader(eval_data, sampler=eval_sampler, batch_size=args.eval_batch_size)
+            eval_dataloader = DataLoader(eval_data, sampler=eval_sampler, batch_size=32)
 
             model.eval() 
             p=[]
